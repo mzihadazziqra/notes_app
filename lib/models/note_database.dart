@@ -20,12 +20,13 @@ class NoteDatabase extends ChangeNotifier {
     // Create a new note object
     final newNote =
         Note()
-          ..text = textFromUser
-          ..title = titleFromUser;
+          ..title = titleFromUser
+          ..content = textFromUser
+          ..isSynced = false
+          ..updatedAt = DateTime.now();
 
     // Save to db
     await isar.writeTxn(() => isar.notes.put(newNote));
-    // print('Note added: ${newNote.title}');
 
     // re-read from db
     await fetchNotes();
@@ -43,7 +44,7 @@ class NoteDatabase extends ChangeNotifier {
   Future<void> updateNotes(int id, String newTitle, String newText) async {
     final existingNote = await isar.notes.get(id);
     if (existingNote != null) {
-      existingNote.text = newText;
+      existingNote.content = newText;
       existingNote.title = newTitle;
       await isar.writeTxn(() => isar.notes.put(existingNote));
       await fetchNotes();
@@ -54,5 +55,21 @@ class NoteDatabase extends ChangeNotifier {
   Future<void> deleteNote(int id) async {
     await isar.writeTxn(() => isar.notes.delete(id));
     await fetchNotes();
+  }
+
+  // Get unsynced notes
+  Future<List<Note>> getUnsyncedNotes() async {
+    return await isar.notes.filter().isSyncedEqualTo(false).findAll();
+  }
+
+  // Update status isSynced
+  Future<void> markNotesAsSynced(int id, int serverID) async {
+    final note = await isar.notes.get(id);
+    if (note != null) {
+      note.isSynced = true;
+      note.serverId = serverID;
+      await isar.writeTxn(() => isar.notes.put(note));
+      await fetchNotes();
+    }
   }
 }

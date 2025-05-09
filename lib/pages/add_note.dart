@@ -33,7 +33,7 @@ class _AddNoteState extends State<AddNote> {
     super.initState();
     isNewNote = widget.note == null;
     textTitleController = TextEditingController(text: widget.note?.title ?? '');
-    textController = TextEditingController(text: widget.note?.text ?? '');
+    textController = TextEditingController(text: widget.note?.content ?? '');
   }
 
   @override

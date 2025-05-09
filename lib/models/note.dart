@@ -9,5 +9,8 @@ part 'note.g.dart';
 class Note {
   Id id = Isar.autoIncrement;
   late String title;
-  late String text;
+  late String content;
+  late DateTime updatedAt;
+  bool isSynced = false;
+  int? serverId;
 }

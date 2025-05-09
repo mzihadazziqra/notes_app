@@ -133,9 +133,9 @@ class _NotesPageState extends State<NotesPage> {
                               fontSize: 18,
                             ),
                           ),
-                        if (notes.text.isNotEmpty)
+                        if (notes.content.isNotEmpty)
                           Text(
-                            notes.text,
+                            notes.content,
                             maxLines: 10,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(),
