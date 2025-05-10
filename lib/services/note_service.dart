@@ -67,7 +67,8 @@ class NoteService {
           return Note()
             ..title = json['title']
             ..content = json['content']
-            ..updatedAt = DateTime.parse(json['update_at'])
+            ..updatedAt = DateTime.parse(json['updated_at'])
+            ..createdAt = DateTime.parse(json['created_at'])
             ..serverId = json['id']
             ..isSynced = true;
         }).toList();

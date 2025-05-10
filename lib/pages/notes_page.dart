@@ -7,6 +7,7 @@ import '../components/drawer.dart';
 import '../core/utils/screen_utils.dart';
 import '../models/note.dart';
 import '../models/note_database.dart';
+import '../services/sync_service.dart';
 import '../theme/card_colors.dart';
 import 'add_note.dart';
 
@@ -22,12 +23,11 @@ class _NotesPageState extends State<NotesPage> {
   void initState() {
     super.initState();
 
-    readNotes();
-  }
-
-  // Read Notes
-  void readNotes() {
-    context.read<NoteDatabase>().fetchNotes();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      final noteDb = context.read<NoteDatabase>();
+      await noteDb.fetchNotes();
+      await SyncService.syncFromServer(noteDb);
+    });
   }
 
   // Delete note

@@ -1,6 +1,6 @@
 -- Merging decision tree log ---
 application
-INJECTED from C:\Users\azziq\OneDrive\Documents\Flutter\notes_app\android\app\src\main\AndroidManifest.xml:2:5-33:19
+INJECTED from C:\Users\azziq\OneDrive\Documents\Flutter\notes_app\android\app\src\main\AndroidManifest.xml:4:5-35:19
 INJECTED from C:\Users\azziq\OneDrive\Documents\Flutter\notes_app\android\app\src\debug\AndroidManifest.xml
 MERGED from [androidx.window:window:1.2.0] C:\Users\azziq\.gradle\caches\8.10.2\transforms\5093ab42d2307deb2d7ac0b7f5718c38\transformed\jetified-window-1.2.0\AndroidManifest.xml:22:5-29:19
 MERGED from [androidx.window:window:1.2.0] C:\Users\azziq\.gradle\caches\8.10.2\transforms\5093ab42d2307deb2d7ac0b7f5718c38\transformed\jetified-window-1.2.0\AndroidManifest.xml:22:5-29:19
@@ -21,11 +21,12 @@ MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\az
 	android:name
 		INJECTED from C:\Users\azziq\OneDrive\Documents\Flutter\notes_app\android\app\src\main\AndroidManifest.xml
 manifest
-ADDED from C:\Users\azziq\OneDrive\Documents\Flutter\notes_app\android\app\src\main\AndroidManifest.xml:1:1-45:12
-MERGED from C:\Users\azziq\OneDrive\Documents\Flutter\notes_app\android\app\src\main\AndroidManifest.xml:1:1-45:12
+ADDED from C:\Users\azziq\OneDrive\Documents\Flutter\notes_app\android\app\src\main\AndroidManifest.xml:1:1-47:12
+MERGED from C:\Users\azziq\OneDrive\Documents\Flutter\notes_app\android\app\src\main\AndroidManifest.xml:1:1-47:12
 INJECTED from C:\Users\azziq\OneDrive\Documents\Flutter\notes_app\android\app\src\debug\AndroidManifest.xml:1:1-7:12
 INJECTED from C:\Users\azziq\OneDrive\Documents\Flutter\notes_app\android\app\src\debug\AndroidManifest.xml:1:1-7:12
 INJECTED from C:\Users\azziq\OneDrive\Documents\Flutter\notes_app\android\app\src\debug\AndroidManifest.xml:1:1-7:12
+MERGED from [:connectivity_plus] C:\Users\azziq\OneDrive\Documents\Flutter\notes_app\build\connectivity_plus\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:2:1-9:12
 MERGED from [:isar_flutter_libs] C:\Users\azziq\OneDrive\Documents\Flutter\notes_app\build\isar_flutter_libs\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:2:1-8:12
 MERGED from [:path_provider_android] C:\Users\azziq\OneDrive\Documents\Flutter\notes_app\build\path_provider_android\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.fragment:fragment:1.7.1] C:\Users\azziq\.gradle\caches\8.10.2\transforms\55520e4df2220e27f13f0bbb7467d11a\transformed\fragment-1.7.1\AndroidManifest.xml:2:1-7:12
@@ -62,26 +63,30 @@ MERGED from [com.getkeepsafe.relinker:relinker:1.4.5] C:\Users\azziq\.gradle\cac
 		INJECTED from C:\Users\azziq\OneDrive\Documents\Flutter\notes_app\android\app\src\debug\AndroidManifest.xml
 	xmlns:android
 		ADDED from C:\Users\azziq\OneDrive\Documents\Flutter\notes_app\android\app\src\main\AndroidManifest.xml:1:11-69
-queries
-ADDED from C:\Users\azziq\OneDrive\Documents\Flutter\notes_app\android\app\src\main\AndroidManifest.xml:39:5-44:15
-intent#action:name:android.intent.action.PROCESS_TEXT+data:mimeType:text/plain
-ADDED from C:\Users\azziq\OneDrive\Documents\Flutter\notes_app\android\app\src\main\AndroidManifest.xml:40:9-43:18
-action#android.intent.action.PROCESS_TEXT
-ADDED from C:\Users\azziq\OneDrive\Documents\Flutter\notes_app\android\app\src\main\AndroidManifest.xml:41:13-72
-	android:name
-		ADDED from C:\Users\azziq\OneDrive\Documents\Flutter\notes_app\android\app\src\main\AndroidManifest.xml:41:21-70
-data
-ADDED from C:\Users\azziq\OneDrive\Documents\Flutter\notes_app\android\app\src\main\AndroidManifest.xml:42:13-50
-	android:mimeType
-		ADDED from C:\Users\azziq\OneDrive\Documents\Flutter\notes_app\android\app\src\main\AndroidManifest.xml:42:19-48
 uses-permission#android.permission.INTERNET
-ADDED from C:\Users\azziq\OneDrive\Documents\Flutter\notes_app\android\app\src\debug\AndroidManifest.xml:6:5-66
+ADDED from C:\Users\azziq\OneDrive\Documents\Flutter\notes_app\android\app\src\main\AndroidManifest.xml:2:1-63
+MERGED from C:\Users\azziq\OneDrive\Documents\Flutter\notes_app\android\app\src\main\AndroidManifest.xml:2:1-63
+MERGED from C:\Users\azziq\OneDrive\Documents\Flutter\notes_app\android\app\src\main\AndroidManifest.xml:2:1-63
 	android:name
-		ADDED from C:\Users\azziq\OneDrive\Documents\Flutter\notes_app\android\app\src\debug\AndroidManifest.xml:6:22-64
+		ADDED from C:\Users\azziq\OneDrive\Documents\Flutter\notes_app\android\app\src\main\AndroidManifest.xml:2:18-60
+queries
+ADDED from C:\Users\azziq\OneDrive\Documents\Flutter\notes_app\android\app\src\main\AndroidManifest.xml:41:5-46:15
+intent#action:name:android.intent.action.PROCESS_TEXT+data:mimeType:text/plain
+ADDED from C:\Users\azziq\OneDrive\Documents\Flutter\notes_app\android\app\src\main\AndroidManifest.xml:42:9-45:18
+action#android.intent.action.PROCESS_TEXT
+ADDED from C:\Users\azziq\OneDrive\Documents\Flutter\notes_app\android\app\src\main\AndroidManifest.xml:43:13-72
+	android:name
+		ADDED from C:\Users\azziq\OneDrive\Documents\Flutter\notes_app\android\app\src\main\AndroidManifest.xml:43:21-70
+data
+ADDED from C:\Users\azziq\OneDrive\Documents\Flutter\notes_app\android\app\src\main\AndroidManifest.xml:44:13-50
+	android:mimeType
+		ADDED from C:\Users\azziq\OneDrive\Documents\Flutter\notes_app\android\app\src\main\AndroidManifest.xml:44:19-48
 uses-sdk
 INJECTED from C:\Users\azziq\OneDrive\Documents\Flutter\notes_app\android\app\src\debug\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from C:\Users\azziq\OneDrive\Documents\Flutter\notes_app\android\app\src\debug\AndroidManifest.xml
 INJECTED from C:\Users\azziq\OneDrive\Documents\Flutter\notes_app\android\app\src\debug\AndroidManifest.xml
+MERGED from [:connectivity_plus] C:\Users\azziq\OneDrive\Documents\Flutter\notes_app\build\connectivity_plus\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
+MERGED from [:connectivity_plus] C:\Users\azziq\OneDrive\Documents\Flutter\notes_app\build\connectivity_plus\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
 MERGED from [:isar_flutter_libs] C:\Users\azziq\OneDrive\Documents\Flutter\notes_app\build\isar_flutter_libs\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:6:5-44
 MERGED from [:isar_flutter_libs] C:\Users\azziq\OneDrive\Documents\Flutter\notes_app\build\isar_flutter_libs\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:6:5-44
 MERGED from [:path_provider_android] C:\Users\azziq\OneDrive\Documents\Flutter\notes_app\build\path_provider_android\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
@@ -142,6 +147,10 @@ MERGED from [com.getkeepsafe.relinker:relinker:1.4.5] C:\Users\azziq\.gradle\cac
 		INJECTED from C:\Users\azziq\OneDrive\Documents\Flutter\notes_app\android\app\src\debug\AndroidManifest.xml
 	android:minSdkVersion
 		INJECTED from C:\Users\azziq\OneDrive\Documents\Flutter\notes_app\android\app\src\debug\AndroidManifest.xml
+uses-permission#android.permission.ACCESS_NETWORK_STATE
+ADDED from [:connectivity_plus] C:\Users\azziq\OneDrive\Documents\Flutter\notes_app\build\connectivity_plus\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:7:5-79
+	android:name
+		ADDED from [:connectivity_plus] C:\Users\azziq\OneDrive\Documents\Flutter\notes_app\build\connectivity_plus\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:7:22-76
 uses-library#androidx.window.extensions
 ADDED from [androidx.window:window:1.2.0] C:\Users\azziq\.gradle\caches\8.10.2\transforms\5093ab42d2307deb2d7ac0b7f5718c38\transformed\jetified-window-1.2.0\AndroidManifest.xml:23:9-25:40
 	android:required

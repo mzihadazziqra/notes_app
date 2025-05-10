@@ -11,6 +11,7 @@ class Note {
   late String title;
   late String content;
   late DateTime updatedAt;
+  late DateTime createdAt;
   bool isSynced = false;
   int? serverId;
 }

@@ -1,4 +1,5 @@
 import 'package:isar/isar.dart';
+import 'package:notes_app/core/utils/network_helper.dart';
 import '../models/note.dart';
 import '../models/note_database.dart';
 import 'note_service.dart';
@@ -6,6 +7,11 @@ import 'note_service.dart';
 class SyncService {
   // Sync notes that have not been synced to the server
   static Future<void> syncToServer(NoteDatabase noteDb) async {
+    final connected = await NetworkHelper.hasInternetConnection();
+    if (!connected) {
+      print('Tidak ada konesi internet, skip syncToServer');
+      return;
+    }
     for (Note note in noteDb.currentNotes) {
       if (!note.isSynced) {
         if (note.serverId == null) {
@@ -34,7 +40,11 @@ class SyncService {
 
   // Sync note from server to local
   static Future<void> syncFromServer(NoteDatabase noteDb) async {
+    final connected = await NetworkHelper.hasInternetConnection();
     final notesFromServer = await NoteService.fetchAllNotesFromServer();
+    if (!connected) {
+      print('Tidak ada koneksi internet, skip syncFromServer');
+    }
     for (Note note in notesFromServer) {
       final existing =
           await NoteDatabase.isar.notes

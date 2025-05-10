@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:isar/isar.dart';
 import 'package:notes_app/models/note.dart';
+import 'package:notes_app/services/note_service.dart';
+import 'package:notes_app/services/sync_service.dart';
 import 'package:path_provider/path_provider.dart';
 
 class NoteDatabase extends ChangeNotifier {
@@ -22,14 +24,18 @@ class NoteDatabase extends ChangeNotifier {
         Note()
           ..title = titleFromUser
           ..content = textFromUser
-          ..isSynced = false
-          ..updatedAt = DateTime.now();
+          ..updatedAt = DateTime.now()
+          ..createdAt = DateTime.now()
+          ..isSynced = false;
 
     // Save to db
     await isar.writeTxn(() => isar.notes.put(newNote));
 
     // re-read from db
     await fetchNotes();
+
+    // Sync data to server after add note
+    await SyncService.syncToServer(this);
   }
 
   // Read
@@ -44,15 +50,28 @@ class NoteDatabase extends ChangeNotifier {
   Future<void> updateNotes(int id, String newTitle, String newText) async {
     final existingNote = await isar.notes.get(id);
     if (existingNote != null) {
-      existingNote.content = newText;
       existingNote.title = newTitle;
+      existingNote.content = newText;
+      existingNote.updatedAt = DateTime.now();
+      existingNote.createdAt = DateTime.now();
+      existingNote.isSynced = false;
       await isar.writeTxn(() => isar.notes.put(existingNote));
       await fetchNotes();
+
+      // Run sync after update the data
+      await SyncService.syncToServer(this);
     }
   }
 
   // Delete
   Future<void> deleteNote(int id) async {
+    final note = await isar.notes.get(id);
+
+    if (note != null && note.serverId != null) {
+      // Delete from server
+      await NoteService.deleteNoteFromServer(note.serverId!);
+    }
+
     await isar.writeTxn(() => isar.notes.delete(id));
     await fetchNotes();
   }
