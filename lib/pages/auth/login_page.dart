@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 import '../../components/custom_text_field.dart';
@@ -50,6 +49,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = ScreenUtils.getScreenSize(context).width;
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(40),
@@ -62,8 +62,9 @@ class _LoginPageState extends State<LoginPage> {
             children: [
               Text(
                 'Login',
-                style: GoogleFonts.dmSerifDisplay(
-                  fontSize: ScreenUtils.getScreenSize(context).width * 0.2,
+                style: TextStyle(
+                  fontFamily: "DmSerifText",
+                  fontSize: screenWidth * 0.2,
                 ),
               ),
               CustomTextField(controller: _emailController, label: 'Email'),

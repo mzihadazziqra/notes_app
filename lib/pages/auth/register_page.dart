@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:notes_app/components/snack_bar.dart';
 import 'package:provider/provider.dart';
 
 import '../../components/custom_text_field.dart';
 import '../../components/passwd_text_field.dart';
+import '../../components/snack_bar.dart';
 import '../../core/utils/screen_utils.dart';
 import '../../services/auth_service.dart';
 import '../notes_page.dart';
@@ -57,6 +56,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = ScreenUtils.getScreenSize(context).width;
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(40),
@@ -69,8 +69,9 @@ class _RegisterPageState extends State<RegisterPage> {
             children: [
               Text(
                 'Register',
-                style: GoogleFonts.dmSerifDisplay(
-                  fontSize: ScreenUtils.getScreenSize(context).width * 0.15,
+                style: TextStyle(
+                  fontFamily: "DmSerifText",
+                  fontSize: screenWidth * 0.15,
                 ),
               ),
               CustomTextField(controller: _nameController, label: 'Name'),
