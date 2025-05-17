@@ -39,6 +39,8 @@ class _NotesPageState extends State<NotesPage> {
     // Note database
     final noteDatabase = context.watch<NoteDatabase>();
 
+    final screenWidth = ScreenUtils.getScreenSize(context).width;
+
     // Current notes
     List<Note> currentNotes = noteDatabase.currentNotes;
 
@@ -49,7 +51,7 @@ class _NotesPageState extends State<NotesPage> {
           'Notes',
           style: TextStyle(
             fontFamily: "DmSerifText",
-            fontSize: ScreenUtils.getScreenSize(context).width * 0.1,
+            fontSize: screenWidth * 0.1,
           ),
         ),
       ),
@@ -65,86 +67,104 @@ class _NotesPageState extends State<NotesPage> {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 5),
-        child: MasonryGridView.builder(
-          itemCount: currentNotes.length,
-          gridDelegate: const SliverSimpleGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-          ),
-          itemBuilder: (context, index) {
-            final notes = currentNotes[index];
-            return Padding(
-              padding: const EdgeInsets.all(3),
-              child: Material(
-                color: Colors.transparent,
-                child: InkWell(
-                  borderRadius: BorderRadius.circular(10),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => AddNote(note: notes),
+        child:
+            currentNotes.isEmpty
+                ? Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.post_add_sharp, size: screenWidth * 0.2),
+                      Text(
+                        "You don't have any notes yet.",
+                        style: TextStyle(fontWeight: FontWeight.bold),
                       ),
-                    );
-                  },
-                  onLongPress: () {
-                    showModalBottomSheet(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              ListTile(
-                                title: Text('Delete Note'),
-                                onTap: () {
-                                  Navigator.of(context).pop();
-                                  showDeleteConfirmationDialog(notes);
-                                },
-                              ),
-                            ],
-                          ),
-                        );
-                      },
-                    );
-                  },
-
-                  child: Container(
-                    padding: const EdgeInsets.all(13),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(
-                        color:
-                            CardColors.cardsColor[index %
-                                CardColors.cardsColor.length],
-                        width: 1.3,
-                      ),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        if (notes.title.isNotEmpty)
-                          Text(
-                            notes.title,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        if (notes.content.isNotEmpty)
-                          Text(
-                            notes.content,
-                            maxLines: 10,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(),
-                          ),
-                      ],
-                    ),
+                      Text('Go ahead and add your first note!'),
+                    ],
                   ),
+                )
+                : MasonryGridView.builder(
+                  itemCount: currentNotes.length,
+                  gridDelegate:
+                      const SliverSimpleGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                      ),
+                  itemBuilder: (context, index) {
+                    final notes = currentNotes[index];
+                    return Padding(
+                      padding: const EdgeInsets.all(3),
+                      child: Material(
+                        color: Colors.transparent,
+                        child: InkWell(
+                          borderRadius: BorderRadius.circular(10),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => AddNote(note: notes),
+                              ),
+                            );
+                          },
+                          onLongPress: () {
+                            showModalBottomSheet(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      ListTile(
+                                        title: Text('Delete Note'),
+                                        onTap: () {
+                                          Navigator.of(context).pop();
+                                          showDeleteConfirmationDialog(notes);
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
+                            );
+                          },
+
+                          child: Container(
+                            padding: const EdgeInsets.all(13),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(
+                                color:
+                                    CardColors.cardsColor[index %
+                                        CardColors.cardsColor.length],
+                                width: 1.3,
+                              ),
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                if (notes.title.isNotEmpty)
+                                  Text(
+                                    notes.title,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                if (notes.content.isNotEmpty)
+                                  Text(
+                                    notes.content,
+                                    maxLines: 10,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(),
+                                  ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  },
                 ),
-              ),
-            );
-          },
-        ),
       ),
     );
   }
