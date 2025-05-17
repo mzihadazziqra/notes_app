@@ -23,6 +23,7 @@ dependencies:
   path_provider: ^2.1.5
   popover: ^0.3.1
   provider: ^6.1.2
+  shared_preferences: ^2.5.3
 
 dev_dependencies:
   build_runner: ^2.4.13
@@ -39,3 +40,8 @@ flutter:
   assets:
     - assets/icon/
     - assets/lottie/
+
+  fonts:
+    - family: DmSerifText
+      fonts:
+        - asset: assets/fonts/DMSerifText-Regular.ttf

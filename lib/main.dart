@@ -1,20 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'models/note_database.dart';
-import 'pages/notes_page.dart';
+import 'db/app_database.dart';
+import 'db/note_database.dart';
+import 'db/user_database.dart';
+import 'pages/splash_screen.dart';
+import 'services/auth_service.dart';
 import 'theme/theme_provider.dart';
 
 void main() async {
   // initialize the database
   WidgetsFlutterBinding.ensureInitialized();
-  await NoteDatabase.initialize();
+  await AppDatabase.initialize();
 
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => NoteDatabase()),
+        ChangeNotifierProvider(create: (context) => AuthService()),
         ChangeNotifierProvider(create: (context) => ThemeProvider()),
+        ChangeNotifierProvider(
+          create: (context) => NoteDatabase(AppDatabase.isar),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => UserDatabase(AppDatabase.isar),
+        ),
       ],
       child: MyApp(),
     ),
@@ -26,10 +35,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: NotesPage(),
-      theme: Provider.of<ThemeProvider>(context).themeData,
+      home: SplashScreen(),
+      theme: themeProvider.themeData,
     );
   }
 }

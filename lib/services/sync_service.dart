@@ -1,7 +1,9 @@
 import 'package:isar/isar.dart';
-import 'package:notes_app/core/utils/network_helper.dart';
+
+import '../core/utils/network_helper.dart';
+import '../db/app_database.dart';
+import '../db/note_database.dart';
 import '../models/note.dart';
-import '../models/note_database.dart';
 import 'note_service.dart';
 
 class SyncService {
@@ -9,7 +11,7 @@ class SyncService {
   static Future<void> syncToServer(NoteDatabase noteDb) async {
     final connected = await NetworkHelper.hasInternetConnection();
     if (!connected) {
-      print('Tidak ada konesi internet, skip syncToServer');
+      print('No internet connection, skip syncToServer');
       return;
     }
     for (Note note in noteDb.currentNotes) {
@@ -20,18 +22,14 @@ class SyncService {
           if (serverId != null) {
             note.serverId = serverId;
             note.isSynced = true;
-            await NoteDatabase.isar.writeTxn(
-              () => NoteDatabase.isar.notes.put(note),
-            );
+            await noteDb.isar.writeTxn(() => noteDb.isar.notes.put(note));
           }
         } else {
           // Existing note, update with PUT
           final success = await NoteService.updateOnServer(note);
           if (success) {
             note.isSynced = true;
-            await NoteDatabase.isar.writeTxn(
-              () => NoteDatabase.isar.notes.put(note),
-            );
+            await noteDb.isar.writeTxn(() => noteDb.isar.notes.put(note));
           }
         }
       }
@@ -43,25 +41,24 @@ class SyncService {
     final connected = await NetworkHelper.hasInternetConnection();
     final notesFromServer = await NoteService.fetchAllNotesFromServer();
     if (!connected) {
-      print('Tidak ada koneksi internet, skip syncFromServer');
+      print('No internet connection, skip syncFromServer');
     }
     for (Note note in notesFromServer) {
       final existing =
-          await NoteDatabase.isar.notes
+          await noteDb.isar.notes
               .filter()
               .serverIdEqualTo(note.serverId)
+              .build()
               .findFirst();
       if (existing == null) {
-        await NoteDatabase.isar.writeTxn(
-          () => NoteDatabase.isar.notes.put(note),
+        await NoteDatabase(AppDatabase.isar).isar.writeTxn(
+          () => NoteDatabase(AppDatabase.isar).isar.notes.put(note),
         );
       } else {
         // if 'updateAt' from server is newer, replace
         if (note.updatedAt.isAfter(existing.updatedAt)) {
           note.id = existing.id;
-          await NoteDatabase.isar.writeTxn(
-            () => NoteDatabase.isar.notes.put(note),
-          );
+          await noteDb.isar.writeTxn(() => noteDb.isar.notes.put(note));
         }
       }
     }

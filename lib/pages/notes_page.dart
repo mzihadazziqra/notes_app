@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 import '../components/drawer.dart';
 import '../core/utils/screen_utils.dart';
+import '../db/note_database.dart';
 import '../models/note.dart';
-import '../models/note_database.dart';
 import '../services/sync_service.dart';
 import '../theme/card_colors.dart';
 import 'add_note.dart';
@@ -48,7 +47,8 @@ class _NotesPageState extends State<NotesPage> {
       appBar: AppBar(
         title: Text(
           'Notes',
-          style: GoogleFonts.dmSerifText(
+          style: TextStyle(
+            fontFamily: "DmSerifText",
             fontSize: ScreenUtils.getScreenSize(context).width * 0.1,
           ),
         ),
@@ -128,10 +128,7 @@ class _NotesPageState extends State<NotesPage> {
                             notes.title,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18,
-                            ),
+                            style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                         if (notes.content.isNotEmpty)
                           Text(

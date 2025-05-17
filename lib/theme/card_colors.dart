@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 class CardColors {
   static List<Color> lightThemeColors = [
-    const Color(0xFFD48B84), // Pastel Red (lebih gelap)
-    const Color(0xFFE5A063), // Pastel Orange (lebih hangat)
-    const Color(0xFFC0D188), // Pastel Yellow-Green (lebih soft)
-    const Color(0xFF8BB8D8), // Pastel Blue (lebih calm)
-    const Color(0xFFC4A0C0), // Pastel Purple (lebih seimbang)
-    const Color(0xFFD4C38A), // Pastel Yellow (tidak terlalu terang)
+    const Color(0xFFD48B84), // Pastel Red
+    const Color(0xFFE5A063), // Pastel Orange
+    const Color(0xFFC0D188), // Pastel Yellow-Green
+    const Color(0xFF8BB8D8), // Pastel Blue
+    const Color(0xFFC4A0C0), // Pastel Purple
+    const Color(0xFFD4C38A), // Pastel Yellow
   ];
 
   static List<Color> darkThemeColors = [

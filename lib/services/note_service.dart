@@ -2,27 +2,37 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
+import '../core/utils/base_url.dart';
 import '../models/note.dart';
+import 'auth_service.dart';
 
 class NoteService {
-  static const String baseUrl = 'http://127.0.0.1:8000/api/notes';
+  static const String baseUrl = '${BaseUrl.baseUrl}/api/notes';
+
+  static Future<Map<String, String>> _getHeader() async {
+    final token = await AuthService.getToken();
+    return {
+      'Content-Type': 'application/json',
+      if (token != null) 'Authorization': 'Bearer $token',
+    };
+  }
 
   // Send note to server
   static Future<int?> createNoteOnServer(Note note) async {
     try {
       final response = await http.post(
         Uri.parse(baseUrl),
-        headers: {'Content-Type': 'application/json'},
+        headers: await _getHeader(),
         body: jsonEncode({'title': note.title, 'content': note.content}),
       );
       if (response.statusCode == 201) {
         final data = jsonDecode(response.body);
         return data['id']; // Id from server
       } else {
-        print('Gagal membuat note di server. Code: ${response.statusCode}');
+        print('Error when createNoteOnServer. Code: ${response.statusCode}');
       }
     } catch (e) {
-      print('Error saat createNoteOnServer: $e');
+      print('Error when createNoteOnServer: $e');
     }
     return null;
   }
@@ -34,13 +44,13 @@ class NoteService {
     try {
       final response = await http.put(
         Uri.parse('$baseUrl/${note.serverId}'),
-        headers: {'Content-Type': 'application/json'},
+        headers: await _getHeader(),
         body: jsonEncode({'title': note.title, 'content': note.content}),
       );
 
       return response.statusCode == 200;
     } catch (e) {
-      print('Error saat updateNoteOnServer: $e');
+      print('Error when updateNoteOnServer: $e');
       return false;
     }
   }
@@ -48,18 +58,24 @@ class NoteService {
   // Delete note on server
   static Future<bool> deleteNoteFromServer(int serverId) async {
     try {
-      final response = await http.delete(Uri.parse('$baseUrl/$serverId'));
+      final response = await http.delete(
+        Uri.parse('$baseUrl/$serverId'),
+        headers: await _getHeader(),
+      );
 
       return response.statusCode == 200 || response.statusCode == 204;
     } catch (e) {
-      print('Error saat deleteNotefromServer: $e');
+      print('Error when deleteNotefromServer: $e');
       return false;
     }
   }
 
   static Future<List<Note>> fetchAllNotesFromServer() async {
     try {
-      final response = await http.get(Uri.parse(baseUrl));
+      final response = await http.get(
+        Uri.parse(baseUrl),
+        headers: await _getHeader(),
+      );
 
       if (response.statusCode == 200) {
         final List data = jsonDecode(response.body);
@@ -73,10 +89,10 @@ class NoteService {
             ..isSynced = true;
         }).toList();
       } else {
-        print('Gagal mengambil data dari server: ${response.statusCode}');
+        print('Error when fetchAllNotesFromServer: ${response.statusCode}');
       }
     } catch (e) {
-      print('Error saat fetchAllNotesFromServer: $e');
+      print('Error when fetchAllNotesFromServer: $e');
     }
 
     return [];

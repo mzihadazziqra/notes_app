@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart' show GoogleFonts;
 import 'package:provider/provider.dart';
 
-import 'package:notes_app/models/note.dart';
-import 'package:notes_app/models/note_database.dart';
-
 import '../core/utils/screen_utils.dart' show ScreenUtils;
+import '../db/note_database.dart';
+import '../models/note.dart';
 
 class AddNote extends StatefulWidget {
   final Note? note;
@@ -18,7 +16,7 @@ class AddNote extends StatefulWidget {
 
 class _AddNoteState extends State<AddNote> {
   late TextEditingController textTitleController;
-  late TextEditingController textController;
+  late TextEditingController textContentController;
   late bool isNewNote;
   late NoteDatabase noteDb;
 
@@ -33,13 +31,15 @@ class _AddNoteState extends State<AddNote> {
     super.initState();
     isNewNote = widget.note == null;
     textTitleController = TextEditingController(text: widget.note?.title ?? '');
-    textController = TextEditingController(text: widget.note?.content ?? '');
+    textContentController = TextEditingController(
+      text: widget.note?.content ?? '',
+    );
   }
 
   @override
   void dispose() {
     final title = textTitleController.text.trim();
-    final text = textController.text.trim();
+    final text = textContentController.text.trim();
 
     if (title.isNotEmpty || text.isNotEmpty) {
       if (isNewNote) {
@@ -50,7 +50,7 @@ class _AddNoteState extends State<AddNote> {
     }
 
     textTitleController.dispose();
-    textController.dispose();
+    textContentController.dispose();
 
     super.dispose();
   }
@@ -68,7 +68,8 @@ class _AddNoteState extends State<AddNote> {
       appBar: AppBar(
         title: Text(
           'Notes',
-          style: GoogleFonts.dmSerifText(
+          style: TextStyle(
+            fontFamily: "DmSerifText",
             fontSize: ScreenUtils.getScreenSize(context).width * 0.07,
           ),
         ),
@@ -91,13 +92,13 @@ class _AddNoteState extends State<AddNote> {
                       textCapitalization: TextCapitalization.sentences,
                       keyboardType: TextInputType.multiline,
                       scrollPhysics: const NeverScrollableScrollPhysics(),
-                      decoration: InputDecoration(
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                      decoration: const InputDecoration(
                         hintText: 'Title',
+                        hintStyle: TextStyle(fontWeight: FontWeight.bold),
                         border: InputBorder.none,
-                        hintStyle: TextStyle(
-                          color: Colors.grey.shade500,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        focusedBorder: InputBorder.none,
+                        enabledBorder: InputBorder.none,
                       ),
                     ),
                     ConstrainedBox(
@@ -105,16 +106,17 @@ class _AddNoteState extends State<AddNote> {
                         minHeight: constraints.maxHeight - 100,
                       ),
                       child: TextField(
-                        controller: textController,
+                        controller: textContentController,
                         maxLines: null,
                         textCapitalization: TextCapitalization.sentences,
                         keyboardType: TextInputType.multiline,
-                        decoration: InputDecoration(
+                        scrollPhysics: const NeverScrollableScrollPhysics(),
+                        decoration: const InputDecoration(
                           hintText: 'Note',
                           border: InputBorder.none,
-                          hintStyle: TextStyle(color: Colors.grey.shade500),
+                          focusedBorder: InputBorder.none,
+                          enabledBorder: InputBorder.none,
                         ),
-                        scrollPhysics: const NeverScrollableScrollPhysics(),
                       ),
                     ),
                   ],
